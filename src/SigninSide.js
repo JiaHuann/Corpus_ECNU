@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import OutlinedCard from './card';
 import { memo } from 'react'
 
-// import MyPDF from './pdf';
+import MyPDF from './pdf';
 
 
 function Copyright() {
@@ -144,7 +144,7 @@ const SignInSide = memo((props) => {
             </Grid>
             <Grid item xs={false} sm={4} md={8} >
                 {/* <Sample/> */}
-                {/* <MyPDF/> */}
+                <MyPDF/>
             </Grid>
         </Grid>
     )
