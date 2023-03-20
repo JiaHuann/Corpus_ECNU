@@ -6,7 +6,7 @@ const db = new sqlite('./database/order.db');   //实例化db
 
 const getTrans = (word) => {
     console.log('kaishi chazhao');
-    const sql = `SELECT * FROM data WHERE key = '${word}';`
+    const sql = `SELECT * FROM data WHERE key LIKE '%${word}%';`
     // `SELECT * FROM data WHERE key = '${word}';`
     let statement = db.prepare(sql)
     console.log(statement);

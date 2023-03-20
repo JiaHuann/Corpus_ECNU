@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
-        
+
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -61,10 +61,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignInSide = memo((props)=>{
+const SignInSide = memo((props) => {
     const [word, setWord] = useState(() => {
         return props.word || undefined
-      })
+    })
     const classes = useStyles();
     const handleSubmit = (event) => {
         event.preventDefault();//阻止页面默认submit跳转
@@ -74,7 +74,7 @@ const SignInSide = memo((props)=>{
         };
 
         let names = window.api.getTrans(payload.word)
-        setWord({word:names[0].key,trans:names[0].value});
+        setWord(names);
 
 
     };
@@ -107,12 +107,13 @@ const SignInSide = memo((props)=>{
                             id="word"
                             autoComplete="current-password"
                         />
-                        {word?(
-                            <Box word={word.word} trans={word.trans}>
-                                <OutlinedCard word={word.word} trans={word.trans} />
-                            </Box>)
-                            :(null)
-                        }
+                        {word ? (
+                            word.map(word => (
+                                <Box word={word.key} trans={word.value}>
+                                    <OutlinedCard word={word.key} trans={word.value} />
+                                </Box>
+                            ))
+                        ) : (null)}
                         <Button
                             type="submit"
                             fullWidth
@@ -122,7 +123,7 @@ const SignInSide = memo((props)=>{
                         >
                             查 找
                         </Button>
-                
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -146,7 +147,7 @@ const SignInSide = memo((props)=>{
                 {/* <MyPDF/> */}
             </Grid>
         </Grid>
-)
+    )
 })
 
 export default SignInSide;
