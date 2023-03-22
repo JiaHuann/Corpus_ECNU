@@ -10,9 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import PageviewIcon from '@material-ui/icons/PageviewOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTransition, animated, useSpring } from 'react-spring'
 import OutlinedCard from './card';
 import { memo } from 'react'
-
+import './test.css'
 import MyPDF from './pdf';
 
 
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignInSide = memo((props) => {
+    const [show, setShow] = useState(false);
     const [word, setWord] = useState(() => {
         return props.word || undefined
     })
@@ -76,8 +78,8 @@ const SignInSide = memo((props) => {
         let names = window.api.getTrans(payload.word)
         setWord(names);
 
-
     };
+    // const animProps = useSpring(props.transition)
     return (
         <Grid container component="main" className={classes.root}>
             {/* <button onClick={() => {
@@ -109,7 +111,7 @@ const SignInSide = memo((props) => {
                         />
                         {word ? (
                             word.map(word => (
-                                <Box word={word.key} trans={word.value}>
+                                <Box className="animate-right-to-left" word={word.key} trans={word.value} >
                                     <OutlinedCard word={word.key} trans={word.value} />
                                 </Box>
                             ))
@@ -144,9 +146,9 @@ const SignInSide = memo((props) => {
             </Grid>
             <Grid item xs={false} sm={4} md={8} >
                 {/* <Sample/> */}
-                <MyPDF/>
+                <MyPDF />
             </Grid>
-        </Grid>
+        </Grid >
     )
 })
 
