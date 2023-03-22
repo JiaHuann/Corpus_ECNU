@@ -30,11 +30,13 @@
     "@react-pdf-viewer/default-layout": "^3.11.0",
     "@react-pdf-viewer/search": "^3.11.0",
     "better-sqlite3-with-prebuilds": "^7.4.3",
-    "react": "^18.2.0",
     "pdfjs-dist": "3.3.122",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.9.0",
-    "react-spring": "^9.7.1",
-    "react-scrollbars-custom": "^4.1.1"
+    "react-scrollbars-custom": "^4.1.1",
+    "react-spinners": "^0.13.8",
+    "react-spring": "^9.7.1"
   }
 }

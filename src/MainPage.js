@@ -107,6 +107,7 @@ const MainPage = memo((props) => {
         //});
         //highlight(currentKeyword);
     };
+    console.log('main page重新渲染了');
     return (
         <Grid container component="main" className={classes.root} >
             {/* <button onClick={() => {

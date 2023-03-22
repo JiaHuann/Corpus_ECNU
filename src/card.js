@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
 import { RenderSearchProps } from '@react-pdf-viewer/search';
+import { MoonLoader } from 'react-spinners';
+import Modal from 'react-modal';
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +29,7 @@ const useStyles = makeStyles({
 
 const OutlinedCard = (props) => {
   let { word, trans, Keyword, highlight, next, previous } = props;
+  const [loading, setLoading] = useState(false);
   console.log(word, trans)
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -35,6 +38,13 @@ const OutlinedCard = (props) => {
     matchCase: false,
     wholeWords: false,
   }
+  const handleShow = async () => {
+    setLoading(true); // 设置loading状态
+    await highlight(currentKeyword);
+    setLoading(false); // 清除loading状态
+    console.log(highlight(currentKeyword));
+  }
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -62,33 +72,36 @@ const OutlinedCard = (props) => {
                         const [readyToSearch, setReadyToSearch] = React.useState(false);
                     return ( */}
       <CardActions>
-        <Button size="small" onClick={() => {
-          //console.log('click show');
-          //console.log(currentKeyword);
-          highlight(currentKeyword);
-          //setReadyToSearch(true);
-          //renderSearchProps.Search();
-        }}>Show</Button>
-        {/*} {readyToSearch && renderSearchProps.numberOfMatches > 0 && (*/}
+        <Button size="small" onClick={handleShow}>Show</Button>
+        <Modal isOpen={loading} onRequestClose={() => setLoading(false)} style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(20px)' // 添加磨砂效果
+          },
+          content: {
+            width: '50%',
+            height: '30%',
+            margin: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#fff',
+            borderRadius: '15px',
+            opacity: 0.8 // 添加半透明
+          }
+        }}>
+          <MoonLoader />
+          <h1>&nbsp;&nbsp;正在构建索引！</h1>
+        </Modal>
+
 
         <Button size="small" onClick={() => {
           next();
         }}>Next</Button>
+
         <Button size="small" onClick={() => {
           previous();
         }}>Previous</Button>
-        {/*<Button size='small'>
-                                            {renderSearchProps.currentMatch} / {renderSearchProps.numberOfMatches}
-                                    </Button>*/}
-
-
-        {/*{readyToSearch && renderSearchProps.numberOfMatches === 0 && (
-                                    <>
-                                        <Button size="small">
-                                            No matches
-                                        </Button>
-                                    </>
-                                )}*/}
 
       </CardActions>
 
