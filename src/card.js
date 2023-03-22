@@ -73,6 +73,7 @@ const OutlinedCard = (props) => {
                     return ( */}
       <CardActions>
         <Button size="small" onClick={handleShow}>Show</Button>
+        {/* 在await promise结束pending后结束modal弹窗 */}
         <Modal isOpen={loading} onRequestClose={() => setLoading(false)} style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
