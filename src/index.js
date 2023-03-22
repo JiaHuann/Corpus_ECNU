@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignInSide from './SigninSide';
+import MainPage from './MainPage';
 window.onload = () => {
-    ReactDOM.render(<SignInSide/>, document.getElementById('app'));
+    ReactDOM.render(<MainPage/>, document.getElementById('app'));
 };

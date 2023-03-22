@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Box } from '@material-ui/core';
+import { RenderSearchProps } from '@react-pdf-viewer/search';
 
 const useStyles = makeStyles({
   root: {
@@ -23,12 +25,16 @@ const useStyles = makeStyles({
   },
 });
 
-const OutlinedCard =(props)=> {
-  let {word,trans} = props;
-  console.log(word,trans)
+const OutlinedCard = (props) => {
+  let { word, trans, Keyword, highlight, next, previous } = props;
+  console.log(word, trans)
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-
+  let currentKeyword = {
+    keyword: Keyword,
+    matchCase: false,
+    wholeWords: false,
+  }
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -36,7 +42,7 @@ const OutlinedCard =(props)=> {
           查询结果
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-         原词：{word}
+          原词：{word}
         </Typography>
         <Typography variant="h5" component="h1">
           {trans}
@@ -47,9 +53,46 @@ const OutlinedCard =(props)=> {
           {'EEEEEEE'}
         </Typography> */}
       </CardContent>
+      {/*    <div>
+                <Search>
+                    {renderSearchProps => {
+                        renderSearchProps.setKeyword(Keyword);
+                        renderSearchProps.matchCase = false;
+                        renderSearchProps.wholeWords = false;
+                        const [readyToSearch, setReadyToSearch] = React.useState(false);
+                    return ( */}
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={() => {
+          //console.log('click show');
+          //console.log(currentKeyword);
+          highlight(currentKeyword);
+          //setReadyToSearch(true);
+          //renderSearchProps.Search();
+        }}>Show</Button>
+        {/*} {readyToSearch && renderSearchProps.numberOfMatches > 0 && (*/}
+
+        <Button size="small" onClick={() => {
+          next();
+        }}>Next</Button>
+        <Button size="small" onClick={() => {
+          previous();
+        }}>Previous</Button>
+        {/*<Button size='small'>
+                                            {renderSearchProps.currentMatch} / {renderSearchProps.numberOfMatches}
+                                    </Button>*/}
+
+
+        {/*{readyToSearch && renderSearchProps.numberOfMatches === 0 && (
+                                    <>
+                                        <Button size="small">
+                                            No matches
+                                        </Button>
+                                    </>
+                                )}*/}
+
       </CardActions>
+
+
     </Card>
   );
 }
