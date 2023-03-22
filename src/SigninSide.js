@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,17 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedCard from './card';
 import { memo } from 'react'
+import { Scrollbar } from 'react-scrollbars-custom';
+import { Worker, Viewer } from '@react-pdf-viewer/core';
 
-// import MyPDF from './pdf';
+import {searchPlugin} from '@react-pdf-viewer/search';
+
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/search/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+// Import styles
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 
 function Copyright() {
@@ -50,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
-        
+
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -61,10 +70,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignInSide = memo((props)=>{
+const SignInSide = memo((props) => {
+    //const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const searchPluginInstance = searchPlugin();
+    //const {Search} = searchPluginInstance;
+    const { highlight, jumpToNextMatch, jumpToPreviousMatch } = searchPluginInstance;
+    //const sreachtoolsins = RenderSearchProps;
+    //const {highlight, jumpToNextMatch,jumpToPreviousMatch,currentMatch,numberOfMatches} = sreachtoolsins;
+
     const [word, setWord] = useState(() => {
         return props.word || undefined
-      })
+    })
+    const [height_window, setHeight_window] = useState(() => {
+        return props.height_window || undefined
+    })
+    const [currentKeyword, setCurrentKeyword] = useState({
+        keyword: '',
+        matchCase: false,
+        wholeWords: false,
+    });
+
     const classes = useStyles();
     const handleSubmit = (event) => {
         event.preventDefault();//阻止页面默认submit跳转
@@ -72,14 +97,18 @@ const SignInSide = memo((props)=>{
         const payload = {
             word: data.get('word') //formdata.get webAPI
         };
-
-        let names = window.api.getTrans(payload.word)
-        setWord({word:names[0].key,trans:names[0].value});
-
-
+        console.log(payload.word);
+        let names = window.api.getTrans(payload.word);
+        setWord(names);
+        //setCurrentKeyword({
+        //    keyword: payload.word,
+        //    matchCase: false,
+        //    wholeWords: false,
+        //});
+        //highlight(currentKeyword);
     };
     return (
-        <Grid container component="main" className={classes.root}>
+        <Grid container component="main" className={classes.root} >
             {/* <button onClick={() => {
                 const v = window.api.getTrans('巴');
                 // console.log(v);
@@ -88,14 +117,14 @@ const SignInSide = memo((props)=>{
             <CssBaseline />
 
             <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
+                <div className={classes.paper} >
                     <Avatar className={classes.avatar}>
                         <PageviewIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         语料库
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                    <form className={classes.form} noValidate onSubmit={handleSubmit} style={{ height: '700px' }}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -107,22 +136,49 @@ const SignInSide = memo((props)=>{
                             id="word"
                             autoComplete="current-password"
                         />
-                        {word?(
-                            <Box word={word.word} trans={word.trans}>
-                                <OutlinedCard word={word.word} trans={word.trans} />
-                            </Box>)
-                            :(null)
-                        }
+                        <Box sx={{
+                            overflow: 'auto',
+                            height: 400,
+                        }}>
+                            <Scrollbar>
+                                {word ? (
+
+                                    word.map(word => (
+                                        <Box word={word.key} trans={word.value} key={word.key}>
+                                            <OutlinedCard word={word.key} trans={word.value}
+                                                Keyword={word.key}
+                                                highlight = {highlight}
+                                                next = {jumpToNextMatch}
+                                                previous = {jumpToPreviousMatch}
+                                                />
+                                        </Box>
+                                    )
+                                    )
+                                ) : (null)}
+                            </Scrollbar>
+                        </Box>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                        //onClick={() => {
+                        //    word?(() => {
+                        //        setCurrentKeyword({
+                        //            keyword: word[0].key,
+                        //            matchCase: false,
+                        //            wholeWords: false,
+                        //        })
+                        //        console.log(currentKeyword);
+                        //        highlight(currentKeyword);
+                        //        console.log('highlight should be ok');
+                        //    }):(() => {})
+                        //}}
                         >
                             查 找
                         </Button>
-                
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -142,11 +198,17 @@ const SignInSide = memo((props)=>{
                 </div>
             </Grid>
             <Grid item xs={false} sm={4} md={8} >
-                {/* <Sample/> */}
-                {/* <MyPDF/> */}
+                <div>
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.3.122/build/pdf.worker.min.js">
+
+                        <div style={{ height: '1000px' }}>
+                            <Viewer fileUrl="./part222.pdf" defaultScale={2} plugins={[searchPluginInstance]} />
+                        </div>
+                    </Worker>
+                </div>
             </Grid>
         </Grid>
-)
+    )
 })
 
 export default SignInSide;
