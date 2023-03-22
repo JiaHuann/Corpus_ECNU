@@ -81,6 +81,7 @@ const MainPage = memo((props) => {
     const [word, setWord] = useState(() => {
         return props.word || undefined
     })
+    const [haveResult, sethaveResult] = useState(true)
     const [height_window, setHeight_window] = useState(() => {
         return props.height_window || undefined
     })
@@ -99,7 +100,14 @@ const MainPage = memo((props) => {
         };
         console.log(payload.word);
         let names = window.api.getTrans(payload.word);
+        console.log(names)
+        if(!names.length){
+            sethaveResult(false);
+            setWord(undefined);
+            return 0;
+        }
         setWord(names);
+        sethaveResult(true);
         //setCurrentKeyword({
         //    keyword: payload.word,
         //    matchCase: false,
@@ -137,7 +145,7 @@ const MainPage = memo((props) => {
                             id="word"
                             autoComplete="current-password"
                         />
-
+                        {haveResult?(null):(<h3>没有查到任何结果哦。</h3>)}
 
                         {word ? (
                             <Box sx={{
