@@ -82,14 +82,14 @@ const MainPage = memo((props) => {
         return props.word || undefined
     })
     const [haveResult, sethaveResult] = useState(true)
-    const [height_window, setHeight_window] = useState(() => {
-        return props.height_window || undefined
-    })
-    const [currentKeyword, setCurrentKeyword] = useState({
-        keyword: '',
-        matchCase: false,
-        wholeWords: false,
-    });
+    // const [height_window, setHeight_window] = useState(() => {
+    //     return props.height_window || undefined
+    // })
+    // const [currentKeyword, setCurrentKeyword] = useState({
+    //     keyword: '',
+    //     matchCase: false,
+    //     wholeWords: false,
+    // });
 
     const classes = useStyles();
     const handleSubmit = (event) => {
