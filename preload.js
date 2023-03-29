@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-const sqlite = require('better-sqlite3-with-prebuilds');
+const sqlite = require('better-sqlite3');
 const db = new sqlite('./database/order.db');   //实例化db
 
 
