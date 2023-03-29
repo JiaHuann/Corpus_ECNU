@@ -2,21 +2,27 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+//const path = require('path')
 
 
 
 const createWindow = () => {
+    if(process.platform == 'darwin' || process.platform == "linux"){
+        preload_path = `${__dirname}/preload.js`
+    }else if(process.platform == 'win32'){
+        preload_path = `${__dirname}\\preload.js`
+    }
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration:true,
-      preload: path.join(__dirname, './preload.js')
+      //preload: path.join(__dirname, './preload.js')
+      preload: preload_path
     }
   })
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 

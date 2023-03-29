@@ -1,14 +1,22 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 const sqlite = require('better-sqlite3');
-const db = new sqlite('./database/order.db');   //实例化db
 
+//let database_path = '';
+//if(process.platform == 'darwin' || process.platform == "linux"){
+//    //console.log(`${__dirname}/database/order.db`);
+//    database_path = './database/order.db';   //实例化db
+//}else if(process.platform == 'win32'){
+//    database_path = '.\\database\\order.db';  
+//    //const db = new sqlite(`${__dirname}\\database\\order.db`);   //实例化db
+//}
+const db = new sqlite('./order.db');   //实例化db
 
 const getTrans = (word) => {
     console.log('kaishi chazhao');
     const sql = `SELECT * FROM data WHERE key LIKE '%${word}%';`
     // `SELECT * FROM data WHERE key = '${word}';`
-    let statement = db.prepare(sql)
+    let statement = db.prepare(sql);
     console.log(statement);
     let res = statement.all();
     console.log(res);
