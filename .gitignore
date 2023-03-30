@@ -1,1 +1,4 @@
 node_modules
+dist
+app.js
+package-lock.json
