@@ -1,14 +1,5 @@
 # 语料库
 
-# usage:
-```shell
-npm i  / cnpm i 
-npm run watch    //webpack监听打包（运行后另起一个shell运行下面的）
-./node_modules/.bin/elctron_rebuilt  //可能会有本地node-gyp构建工具依赖问题（大概率不会）
-npm start
-```
-
-
 # 语料库实现路径
 
 我们选择使用 `Electron` 和 `React` 开发桌面应用程序，因为这两个技术都是目前市场上非常流行且功能强大的。Electron 可以让我们轻松地将应用程序部署到多个平台，如 Windows、macOS 和 Linux，而 React 则能让我们轻松地构建出易于维护和扩展的用户界面。同时，这两个技术的社区非常活跃，有大量的资源和文档可供参考，以便我们在遇到问题时能够快速找到解决方案。
@@ -36,7 +27,7 @@ npm start
 3. **实现虚拟 DOM 渲染优化**：利用 React 的 **`memo`** 和 **`useCallback`** Hook 函数，避免不必要的重新渲染和函数重建，从而提高应用程序的性能。
 4. **集成 Material-UI**：在项目中引入 **`@material-ui/core`** 和 **`@material-ui/icons`**，使用 **`makeStyles`** 和 **`ThemeProvider`** 进行自定义样式和主题设置。
 5. **实现 PDF 阅读功能**：在 React 组件中引入 **`@react-pdf-viewer/core`** 和 **`@react-pdf-viewer/default-layout`**，配置 PDF.js worker 文件，使用 **`Document`** 和 **`Page`** 组件进行 PDF 文件的渲染和翻页操作。
-6. **数据库设计与集成**：创建一个 SQLite 数据库，设计合适的表结构（例如，使用外键约束和多对多关系），并为词汇及其释义、出现位置等信息建立索引以提高查询性能。在项目中引入 **`better-sqlite3-with-prebuilds`**，实现数据的 CRUD（创建、读取、更新和删除）操作。
+6. **数据库设计与集成**：创建一个 SQLite 数据库，设计合适的表结构（例如，使用外键约束和多对多关系），并为词汇及其释义、出现位置等信息建立索引以提高查询性能。在项目中引入 **`better-sqlite3`**，实现数据的 CRUD（创建、读取、更新和删除）操作。
 7. **词汇检索组件实现**：使用 React 的受控组件模式和防抖（debouncing）技术来实现实时搜索功能。为词汇条目添加 **`React.Fragment`** 和 **`key`** 属性，以优化渲染性能。
 8. **利用虚拟列表优化长列表性能**：对于搜索结果的长列表，使用 **`react-window`** 或 **`react-virtualized`** 实现虚拟列表，以减少 DOM 节点的数量并提高渲染性能。
 9. **使用 React Portal 实现弹窗**：利用 React Portal 技术在 DOM 层次结构之外渲染词汇释义弹窗，以避免样式冲突和提高组件独立性。

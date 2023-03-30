@@ -6,8 +6,10 @@
     "scripts": {
         "start": "electron .",
         "watch": "webpack --config ./config/webpack.common.js --watch",
+        "build": "webpack --config ./config/webpack.common.js",
+        "postbuild": "electron-rebuild",
         "postinstall": "electron-builder install-app-deps",
-        "build": "electron-builder -c ./config/ele-builder.json"
+        "package": "electron-builder -c ./config/ele-builder.json"
     },
     "license": "ISC",
     "devDependencies": {

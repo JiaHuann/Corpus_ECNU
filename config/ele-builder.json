@@ -3,6 +3,12 @@
     "productName": "Corpus",
     "nodeGypRebuild": false,
     "asar": false,
+    "file":[
+        "!README.md",
+        "!assets/app_icon${/*}",
+        "!assets/show_assets${/**/*}",
+        "!docs${/*}"
+    ],
     "win": {
         "target":[
             {

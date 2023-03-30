@@ -13,3 +13,4 @@
 ![](assets/show_assets/gif/jump.gif)
 
 ## 实现细节
+请查看![实现路径](docs/README.md)
