@@ -1,0 +1,28 @@
+{
+    "appId": "com.electron.Corpus",
+    "productName": "Corpus",
+    "nodeGypRebuild": false,
+    "asar": false,
+    "win": {
+        "target":[
+            {
+                "target": "portable",
+                "arch": [
+                    "x64"
+                ]
+            }
+        ],
+        "icon": "assets/app_icon/main_icon.png"
+    },
+    "mac": {
+        "icon": "assets/app_icon/main_icon.png",
+        "target": [
+            {
+                "target": "zip",
+                "arch": [
+                    "arm64"
+                ]
+            }
+        ]
+    }
+}
