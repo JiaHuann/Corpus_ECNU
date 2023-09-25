@@ -27,10 +27,16 @@ const getTrans = (word) => {
     return res;
 }
 
+const getDir = ()=>{
+    const dirname = `${__dirname}`
+    return dirname
 
-//暴露到 main world 使browser可以调用
+}
+
+//暴露到 main world 使browser可以调用(main world:渲染进程主界面)
 contextBridge.exposeInMainWorld("api",{
-    getTrans:getTrans
+    getTrans:getTrans,
+    getDir:getDir
 })
 
 

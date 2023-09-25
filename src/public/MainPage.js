@@ -1,4 +1,7 @@
-import React, {useState } from 'react';
+//React核心
+import React, {useState, memo} from 'react';
+
+//UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,18 +13,22 @@ import Grid from '@material-ui/core/Grid';
 import PageviewIcon from '@material-ui/icons/PageviewOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+//组件，css
 import OutlinedCard from './card';
-import { memo } from 'react'
-import { Scrollbar } from 'react-scrollbars-custom';
+import ClassicPage from './ClassicPage';
 import MyPDF from './Mypdf';
 import "./css/test.css"
-import { searchPlugin } from '@react-pdf-viewer/search';
 
+import { Scrollbar } from 'react-scrollbars-custom';
+
+//pdf
+import { searchPlugin } from '@react-pdf-viewer/search';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/search/lib/styles/index.css';
-
-// Import styles
+// pdf styles
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
 
 
 function Copyright() {
@@ -70,27 +77,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainPage = memo((props) => {
-    //const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    const searchPluginInstance = searchPlugin();
-    //const {Search} = searchPluginInstance;
-    const { highlight, jumpToNextMatch, jumpToPreviousMatch } = searchPluginInstance;
-    //const sreachtoolsins = RenderSearchProps;
-    //const {highlight, jumpToNextMatch,jumpToPreviousMatch,currentMatch,numberOfMatches} = sreachtoolsins;
+    console.log('main page重新渲染了');
+    const classes = useStyles();
 
+    const searchPluginInstance = searchPlugin();
+    const { highlight, jumpToNextMatch, jumpToPreviousMatch } = searchPluginInstance;
+
+    const [Show, setShow] = useState(true)
+    const [haveResult, sethaveResult] = useState(true)
     const [word, setWord] = useState(() => {
         return props.word || undefined
     })
-    const [haveResult, sethaveResult] = useState(true)
-    // const [height_window, setHeight_window] = useState(() => {
-    //     return props.height_window || undefined
-    // })
-    // const [currentKeyword, setCurrentKeyword] = useState({
-    //     keyword: '',
-    //     matchCase: false,
-    //     wholeWords: false,
-    // });
 
-    const classes = useStyles();
+    const handleshow=()=>{
+        setShow(false)
+    }
+    
     const handleSubmit = (event) => {
         event.preventDefault();//阻止页面默认submit跳转
         const data = new FormData(event.currentTarget);
@@ -107,99 +109,102 @@ const MainPage = memo((props) => {
         }
         setWord(names);
         sethaveResult(true);
-        //setCurrentKeyword({
-        //    keyword: payload.word,
-        //    matchCase: false,
-        //    wholeWords: false,
-        //});
-        //highlight(currentKeyword);
     };
-    console.log('main page重新渲染了');
-    return (
-        <Grid container component="main" className={classes.root} >
-            {/* <button onClick={() => {
-                const v = window.api.getTrans('巴');
-                // console.log(v);
-            }}>notice
-            </button> */}
-            <CssBaseline />
 
-            <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
-                <div className={classes.paper} >
-                    <Avatar className={classes.avatar}>
-                        <PageviewIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        语料库
-                    </Typography>
-                    <form className={classes.form} noValidate onSubmit={handleSubmit} style={{ height: '700px' }}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="word"
-                            label="专业词汇:"
-                            type="word"
-                            id="word"
-                            autoComplete="current-password"
-                        />
-                        {haveResult?(null):(<h3>没有查到任何结果哦。</h3>)}
-
-                        {word ? (
-                            <Box sx={{
-                                overflow: 'auto',
-                                height: 400,
-                            }}>
-                                <Scrollbar>
-                                    {word.map(word => (
-                                    <Box className="animate-right-to-left" word={word.key} trans={word.value} key={word.key}>
-                                        <OutlinedCard word={word.key} trans={word.value}
-                                            Keyword={word.key}
-                                            highlight={highlight}
-                                            next={jumpToNextMatch}
-                                            previous={jumpToPreviousMatch}
-                                        />
-                                    </Box>
-                                    ))}
-                                </Scrollbar>
-                            </Box>
-                        ) : (null)}
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            查 找
-                        </Button>
-
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    了解更多
-                                </Link>
+    if(Show){
+        return (
+            <Grid container component="main" className={classes.root} >
+                {/* <button onClick={() => {
+                    const v = window.api.getTrans('巴');
+                    // console.log(v);
+                }}>notice
+                </button> */}
+                <CssBaseline />
+    
+                <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
+                    <div className={classes.paper} >
+                        <Avatar className={classes.avatar}>
+                            <PageviewIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            语料库
+                        </Typography>
+                        <form className={classes.form} noValidate onSubmit={handleSubmit} style={{ height: '700px' }}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="word"
+                                label="专业词汇:"
+                                type="word"
+                                id="word"
+                                autoComplete="current-password"
+                            />
+                            {haveResult?(null):(<h3>没有查到任何结果哦。</h3>)}
+    
+                            {word ? (
+                                <Box sx={{
+                                    overflow: 'auto',
+                                    height: 400,
+                                }}>
+                                    <Scrollbar>
+                                        {word.map(word => (
+                                        <Box className="animate-right-to-left" word={word.key} trans={word.value} key={word.key}>
+                                            <OutlinedCard word={word.key} trans={word.value}
+                                                Keyword={word.key}
+                                                highlight={highlight}
+                                                next={jumpToNextMatch}
+                                                previous={jumpToPreviousMatch}
+                                            />
+                                        </Box>
+                                        ))}
+                                    </Scrollbar>
+                                </Box>
+                            ) : (null)}
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                查 找
+                            </Button>
+    
+                            <Grid container>
+                                <Grid item xs>
+                                    <div onClick={handleshow}>
+                                        了解更多
+                                    </div>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        {"添加更多的词语"}
+                                    </Link>
+                                </Grid>
                             </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"添加更多的词语"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                    <Box mt={5}>
-                        <Copyright />
-                    </Box>
-                </div>
+                        </form>
+                        <Box mt={5}>
+                            <Copyright />
+                        </Box>
+                    </div>
+                </Grid>
+                <Grid item xs={false} sm={4} md={8} >
+                    <div>
+                        <MyPDF searchPluginInstance={searchPluginInstance} />
+                    </div>
+                </Grid>
             </Grid>
-            <Grid item xs={false} sm={4} md={8} >
-                <div>
-                    <MyPDF searchPluginInstance={searchPluginInstance} />
-                </div>
-            </Grid>
-        </Grid>
-    )
+        )
+    }
+    if(!Show){
+        return(
+            <div>
+                <ClassicPage/>
+            </div>
+        )
+    }
 })
 
 export default MainPage;
