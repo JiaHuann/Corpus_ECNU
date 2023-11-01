@@ -8,20 +8,24 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|tsx?)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [[
-              '@babel/preset-env', {
-                targets: {
-                  esmodules: true
-                }
-              }],
-              '@babel/preset-react']
-          }
-        }
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    esmodules: true,
+                  },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
+        },
       },
       {
         test: [/\.s[ac]ss$/i, /\.css$/i],
@@ -33,11 +37,11 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
-      }
-    ]
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.ts', '.tsx'], // 添加对 '.ts' 和 '.tsx' 文件的支持
   },
   output: {
     filename: 'app.js',

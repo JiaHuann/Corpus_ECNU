@@ -5,8 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Box } from '@material-ui/core';
-import { RenderSearchProps } from '@react-pdf-viewer/search';
 import { MoonLoader } from 'react-spinners';
 import Modal from 'react-modal';
 
@@ -30,7 +28,7 @@ const useStyles = makeStyles({
 const OutlinedCard = (props) => {
   let { word, trans, Keyword, highlight, next, previous } = props;
   const [loading, setLoading] = useState(false);
-  console.log(word, trans)
+  //console.log(word, trans)
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   let currentKeyword = {
@@ -42,7 +40,7 @@ const OutlinedCard = (props) => {
     setLoading(true); // 设置loading状态
     await highlight(currentKeyword);
     setLoading(false); // 清除loading状态
-    console.log(highlight(currentKeyword));
+    //console.log(highlight(currentKeyword));
   }
 
   return (
@@ -57,20 +55,9 @@ const OutlinedCard = (props) => {
         <Typography variant="h5" component="h1">
           {trans}
         </Typography>
-        {/* <Typography variant="body2" component="p">
-          DDDDD
-          <br />
-          {'EEEEEEE'}
-        </Typography> */}
+
       </CardContent>
-      {/*    <div>
-                <Search>
-                    {renderSearchProps => {
-                        renderSearchProps.setKeyword(Keyword);
-                        renderSearchProps.matchCase = false;
-                        renderSearchProps.wholeWords = false;
-                        const [readyToSearch, setReadyToSearch] = React.useState(false);
-                    return ( */}
+
       <CardActions>
         <Button size="small" onClick={handleShow}>Show</Button>
         {/* 在await promise结束pending后结束modal弹窗 */}

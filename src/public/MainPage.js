@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainPage = memo((props) => {
-    console.log('main page重新渲染了');
+    //.log('main page重新渲染了');
     const classes = useStyles();
 
     const searchPluginInstance = searchPlugin();
@@ -99,9 +99,9 @@ const MainPage = memo((props) => {
         const payload = {
             word: data.get('word') //formdata.get webAPI
         };
-        console.log(payload.word);
+        //console.log(payload.word);
         let names = window.api.getTrans(payload.word);
-        console.log(names)
+        //console.log(names)
         if(!names.length){
             sethaveResult(false);
             setWord(undefined);
@@ -175,7 +175,7 @@ const MainPage = memo((props) => {
                             <Grid container>
                                 <Grid item xs>
                                     <div onClick={handleshow}>
-                                        了解更多
+                                        切换到传统模式
                                     </div>
                                 </Grid>
                                 <Grid item>
@@ -201,7 +201,7 @@ const MainPage = memo((props) => {
     if(!Show){
         return(
             <div>
-                <ClassicPage/>
+                <ClassicPage searchPluginInstance={searchPluginInstance}/>
             </div>
         )
     }
